@@ -8,12 +8,12 @@ Usage example
 -------------
 
 1. Install dependencies:
-```shell
+```bash
 $ pip install -r requirements.txt
 ```
 
 2. Launch replacing `<username>` with the username you want stats for:
-```shell
+```bash
 $ python lastfm_stats <username>
 
 You have listened to a total of 254 tracks. 
