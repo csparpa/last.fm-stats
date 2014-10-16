@@ -11,11 +11,10 @@ class Artist(Base):
 class Track(Base):
     __tablename__ = 'Track'
     id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String(50), nullable=False)
     listening_uts = Column(String(20), nullable=False, unique=True)
     artist_id = Column(String, ForeignKey('Artist.id'), nullable=False)
     artist = relationship(Artist)
-
-
 
 class Datastore():
 

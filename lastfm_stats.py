@@ -11,12 +11,14 @@ if __name__ == '__main__':
     client = HttpClient()
     ds = Datastore('lastfm_stats.db')
 
-    # Retrieve recently listened to data from API
+    # Call 1: retrieve recently listened to data from API
     json_blob = client.get_track_history(username, api_key, 1)
     list_of_tracks = TrackParser.parse(json_blob)
     ds.save(list_of_tracks)
 
-    # Retrieve historical listenings
+    # Identify oldest saved track
+
+    # Call 2: retrieve historical listenings
     json_blob = client.get_track_history(username, api_key, 2)
     list_of_tracks = TrackParser.parse(json_blob)
     ds.save(list_of_tracks)
