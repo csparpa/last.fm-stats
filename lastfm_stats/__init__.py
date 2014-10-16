@@ -1,1 +1,3 @@
-__author__ = 'claudio'
+#!/usr/bin/env python
+
+from httpclient import HttpClient

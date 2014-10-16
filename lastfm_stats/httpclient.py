@@ -1,1 +1,3 @@
-__author__ = 'claudio'
+
+class HttpClient():
+    raise Exception("Not yet implemented")
