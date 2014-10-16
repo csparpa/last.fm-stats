@@ -11,15 +11,15 @@ if __name__ == '__main__':
     client = HttpClient()
     ds = Datastore(username+'.db')
 
+    def save_track_history_for(username, api_key, before=None):
+        json_blob = client.get_recent_tracks_for(username, api_key, before)
+        ds.save(TrackParser.parse(json_blob))
+
     # Retrieve recently listened to data from API
-    json_blob = client.get_track_history(username, api_key)
-    list_of_tracks = TrackParser.parse(json_blob)
-    ds.save(list_of_tracks)
+    save_track_history_for(username, api_key)
 
     # Identify oldest saved track for user then retrieve historical listenings
     # This is done exactly 4 times
     for _ in range(4):
         uts = ds.oldest_listening_uts()
-        json_blob = client.get_track_history(username, api_key, to=uts)
-        list_of_tracks = TrackParser.parse(json_blob)
-        ds.save(list_of_tracks)
+        save_track_history_for(username, api_key, uts)
