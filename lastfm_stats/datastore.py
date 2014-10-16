@@ -6,14 +6,13 @@ Base = declarative_base()
 
 class Artist(Base):
     __tablename__ = 'Artist'
-    mbid = Column(String(36), primary_key=True)
-    name = Column(String(50), nullable=False)
+    id = Column(String(50), primary_key=True)
 
 class Track(Base):
     __tablename__ = 'Track'
-    mbid = Column(String(36), primary_key=True)
-    listening_uts = Column(String(20), nullable=False, primary_key=True)
-    artist_mbid = Column(String, ForeignKey('Artist.mbid'), nullable=False)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    listening_uts = Column(String(20), nullable=False, unique=True)
+    artist_id = Column(String, ForeignKey('Artist.id'), nullable=False)
     artist = relationship(Artist)
 
 

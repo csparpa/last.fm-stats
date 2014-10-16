@@ -8,10 +8,8 @@ class TrackParser():
         tracks = blob['recenttracks']['track']
         for track in tracks:
             try:
-                artist = Artist(mbid=track['artist']['mbid'],
-                                name=track['artist']['#text'])
-                track = Track(mbid=track['mbid'],
-                              listening_uts=track['date']['uts'],
+                artist = Artist(id=track['artist']['#text'])
+                track = Track(listening_uts=track['date']['uts'],
                               artist=artist)
                 result.append(track)
             except KeyError:
