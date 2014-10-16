@@ -1,3 +1,4 @@
 *.pyc
 *~
 .idea/*
+lastfm_stats.db
