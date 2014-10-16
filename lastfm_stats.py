@@ -9,20 +9,17 @@ api_key = '37ec4aba2276f65295c2401e38355447'
 if __name__ == '__main__':
     username = argv[1]
     client = HttpClient()
-    ds = Datastore('lastfm_stats.db')
+    ds = Datastore(username+'.db')
 
-    # Call 1: retrieve recently listened to data from API
-    json_blob = client.get_track_history(username, api_key, 1)
+    # Retrieve recently listened to data from API
+    json_blob = client.get_track_history(username, api_key)
     list_of_tracks = TrackParser.parse(json_blob)
     ds.save(list_of_tracks)
 
-    # Identify oldest saved track
-
-    # Call 2: retrieve historical listenings
-    json_blob = client.get_track_history(username, api_key, 2)
-    list_of_tracks = TrackParser.parse(json_blob)
-    ds.save(list_of_tracks)
-
-    # Store data to database
-
-    # Aggregate data from database
+    # Identify oldest saved track for user then retrieve historical listenings
+    # This is done exactly 4 times
+    for _ in range(4):
+        uts = ds.oldest_listening_uts()
+        json_blob = client.get_track_history(username, api_key, to=uts)
+        list_of_tracks = TrackParser.parse(json_blob)
+        ds.save(list_of_tracks)
