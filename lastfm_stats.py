@@ -2,6 +2,7 @@
 
 from sys import argv
 from lastfm_stats import HttpClient, TrackParser, Datastore, Aggregator
+from sqlalchemy import create_engine
 
 
 api_key = '37ec4aba2276f65295c2401e38355447'
@@ -9,7 +10,7 @@ api_key = '37ec4aba2276f65295c2401e38355447'
 if __name__ == '__main__':
     username = argv[1]
     client = HttpClient()
-    ds = Datastore(username+'.db')
+    ds = Datastore(create_engine('sqlite:///%s.db' % (username,)))
     aggr = Aggregator(ds)
 
     def save_track_history_for(username, api_key, before=None):

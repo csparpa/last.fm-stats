@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, String, Integer, BigInteger, create_engine
+from sqlalchemy import Column, ForeignKey, String, Integer, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.sql import func
@@ -19,9 +19,9 @@ class Track(Base):
 
 class Datastore():
 
-    def __init__(self, db_name):
+    def __init__(self, engine):
         # Init ORM
-        self.engine = create_engine('sqlite:///'+db_name)
+        self.engine = engine
         self.Session = sessionmaker(bind=self.engine)
         Base.metadata.create_all(self.engine)
 
