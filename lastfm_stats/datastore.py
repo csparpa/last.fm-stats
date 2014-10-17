@@ -2,6 +2,7 @@ from sqlalchemy import Column, ForeignKey, String, Integer, BigInteger, desc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.sql import func
+from datetime import datetime
 
 Base = declarative_base()
 
@@ -40,10 +41,22 @@ class Datastore():
         self.session.close()
         return query.one().min_uts
 
+    def count_tracks(self):
+        query = self.session.query(Track.name)
+        self.session.close()
+        return query.count()
+
     def count_unique_tracks(self):
         query = self.session.query(Track.name).distinct()
         self.session.close()
         return query.count()
+
+    def count_activity_days(self):
+        utss = self.session.query(Track.listening_uts).all()
+        self.session.close()
+        dates = [datetime.fromtimestamp(uts[0]).date() for uts in utss]
+        unique_dates = set(dates)
+        return len(unique_dates)
 
     def artist_occurrences(self):
         query = self.session.query(Track.artist_id,

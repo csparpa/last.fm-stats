@@ -1,3 +1,4 @@
+import math
 
 class Aggregator():
 
@@ -11,9 +12,13 @@ class Aggregator():
         occurrences = self.datastore.artist_occurrences()
         return [t[0] for t in occurrences[:5]]
 
-
     def daily_average_tracks(self):
-        pass
+        n_tracks = self.datastore.count_tracks()
+        utss = self.datastore.count_activity_days()
+        if utss != 0:
+            return math.floor(n_tracks/utss)
+        else:
+            return None
 
     def most_active_weekday(self):
         pass

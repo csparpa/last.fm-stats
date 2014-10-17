@@ -32,9 +32,13 @@ if __name__ == '__main__':
 
     print 'Your top 5 favorite artists: %s.' % \
           (", ".join(aggr.top_favorite_artists()),)
-    """
-    print 'You listen to an average of %d tracks a day.' % \
-          (aggr.daily_average_tracks(),)
 
+    avg = aggr.daily_average_tracks()
+    if avg is not None:
+        print 'You listen to an average of %d tracks a day.' % (avg,)
+    else:
+        print 'You never listened to any track.'
+
+"""
     print 'Your most active day is %s.' % (aggr.most_active_weekday(),)
     """
