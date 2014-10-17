@@ -51,12 +51,10 @@ class Datastore():
         self.session.close()
         return query.count()
 
-    def count_activity_days(self):
-        utss = self.session.query(Track.listening_uts).all()
+    def get_all_listening_uts(self):
+        query = self.session.query(Track.listening_uts)
         self.session.close()
-        dates = [datetime.fromtimestamp(uts[0]).date() for uts in utss]
-        unique_dates = set(dates)
-        return len(unique_dates)
+        return query.all()
 
     def artist_occurrences(self):
         query = self.session.query(Track.artist_id,

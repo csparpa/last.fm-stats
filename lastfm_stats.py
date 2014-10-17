@@ -39,6 +39,4 @@ if __name__ == '__main__':
     else:
         print 'You never listened to any track.'
 
-"""
     print 'Your most active day is %s.' % (aggr.most_active_weekday(),)
-    """
