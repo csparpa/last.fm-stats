@@ -35,3 +35,7 @@ class Datastore():
         session = self.Session()
         query = session.query(func.min(Track.listening_uts).label("min_uts"),)
         return query.one().min_uts
+
+    def count_unique_tracks(self):
+        session = self.Session()
+        return session.query(Track.name).distinct().count()
