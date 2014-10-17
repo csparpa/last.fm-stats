@@ -4,17 +4,16 @@ from sys import argv
 from lastfm_stats import HttpClient, TrackParser, Datastore, Aggregator
 from sqlalchemy import create_engine
 
-
-api_key = '37ec4aba2276f65295c2401e38355447'
-
 if __name__ == '__main__':
+
+    api_key = '37ec4aba2276f65295c2401e38355447'
     username = argv[1]
-    client = HttpClient()
+    client = HttpClient(api_key)
     ds = Datastore(create_engine('sqlite:///%s.db' % (username,)))
     aggr = Aggregator(ds)
 
-    def save_track_history_for(username, api_key, before=None):
-        json_blob = client.get_recent_tracks_for(username, api_key, before)
+    def save_track_history_for(username, before=None):
+        json_blob = client.get_recent_tracks_for(username, before)
         ds.save(TrackParser.parse(json_blob))
 
     # Retrieve recently listened to data from API
