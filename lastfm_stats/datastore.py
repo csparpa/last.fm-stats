@@ -41,11 +41,15 @@ class Datastore():
         return query.one().min_uts
 
     def count_unique_tracks(self):
-        return self.session.query(Track.name).distinct().count()
+        query = self.session.query(Track.name).distinct()
         self.session.close()
+        return query.count()
 
     def artist_occurrences(self):
-        return self.session.query(Track.artist_id,
-            func.count(Track.artist_id).label("cnt")).\
-            group_by(Track.artist_id).\
-            order_by(desc("cnt")).all()
+        query = self.session.query(Track.artist_id,
+                    func.count(Track.artist_id).label("cnt")).\
+                    group_by(Track.artist_id).\
+                    order_by(desc("cnt")
+                )
+        self.session.close()
+        return query.all()
