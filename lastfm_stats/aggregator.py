@@ -4,7 +4,7 @@ class Aggregator():
     def __init__(self, datastore):
         self.datastore = datastore
 
-    def count_tracks(self):
+    def count_unique_tracks(self):
         pass
 
     def top_favorite_artists(self):
