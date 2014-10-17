@@ -7,11 +7,12 @@ Base = declarative_base()
 
 class Artist(Base):
     __tablename__ = 'Artist'
-    id = Column(String(50), primary_key=True)
+    id = Column(String(56), primary_key=True)
 
 class Track(Base):
     __tablename__ = 'Track'
     id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(100), nullable=False)
     listening_uts = Column(BigInteger, nullable=False)
     artist_id = Column(String, ForeignKey('Artist.id'), nullable=False)
     artist = relationship(Artist)
