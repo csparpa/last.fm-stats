@@ -29,10 +29,12 @@ if __name__ == '__main__':
     # Get stats
     print 'You have listened to a total of %d tracks.' % \
           (aggr.count_unique_tracks(),)
-    """
+
     print 'Your top 5 favorite artists: %s.' % \
-          (" ,".join(aggr.top_favorite_artists()),)
+          (", ".join(aggr.top_favorite_artists()),)
+    """
     print 'You listen to an average of %d tracks a day.' % \
           (aggr.daily_average_tracks(),)
+
     print 'Your most active day is %s.' % (aggr.most_active_weekday(),)
     """

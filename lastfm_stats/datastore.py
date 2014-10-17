@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, String, Integer, BigInteger
+from sqlalchemy import Column, ForeignKey, String, Integer, BigInteger, desc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.sql import func
@@ -22,20 +22,30 @@ class Datastore():
     def __init__(self, engine):
         # Init ORM
         self.engine = engine
-        self.Session = sessionmaker(bind=self.engine)
+        self.session = sessionmaker(bind=self.engine)()
         Base.metadata.create_all(self.engine)
 
     def save(self, list_of_tracks):
-        session = self.Session()
-        for track in list_of_tracks:
-            session.merge(track)
-        session.commit()
+        try:
+            for track in list_of_tracks:
+                self.session.merge(track)
+        except:
+            self.session.rollback()
+            raise
+        finally:
+            self.session.commit()
 
     def oldest_listening_uts(self):
-        session = self.Session()
-        query = session.query(func.min(Track.listening_uts).label("min_uts"),)
+        query = self.session.query(func.min(Track.listening_uts).label("min_uts"),)
+        self.session.close()
         return query.one().min_uts
 
     def count_unique_tracks(self):
-        session = self.Session()
-        return session.query(Track.name).distinct().count()
+        return self.session.query(Track.name).distinct().count()
+        self.session.close()
+
+    def artist_occurrences(self):
+        return self.session.query(Track.artist_id,
+            func.count(Track.artist_id).label("cnt")).\
+            group_by(Track.artist_id).\
+            order_by(desc("cnt")).all()
