@@ -14,5 +14,5 @@ class TrackParser():
                               artist=artist)
                 result.append(track)
             except KeyError:
-                print "Error in parsing track info: skipping"
+                pass
         return result
