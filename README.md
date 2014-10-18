@@ -13,7 +13,6 @@ How to use it
 1. Clone source code into a folder the Python interpreter can write into (eg. your
    home directory):
 ```bash
-$ cd ~
 $ git clone git@github.com:csparpa/last.fm-stats.git
 ```
 
@@ -26,7 +25,7 @@ $ sudo pip install -r requirements.txt
 
 3. Launch replacing `<username>` with the username you want stats for:
 ```bash
-$ python lastfm_stats <username>
+$ python lastfm_stats.py <username>
 
 You have listened to a total of 254 tracks. 
 Your top 5 favorite artists: U2, Led Zeppelin, Rolling Stones, Bob Marley, Kasabian.
@@ -36,8 +35,9 @@ Your most active day is Tuesday.
 
 How to run the test suites
 --------------------------
+Make sure you are inside the git-cloned folder and execute:
 ```bash
-$ python setup.py test
+$ python -m unittest discover
 ```
 
 What you need to know
@@ -46,6 +46,6 @@ What you need to know
   external components:
     - Last.fm web API
     - SQLite database
-* No tests provided for the Data Access provider class, as it relies on
-  SQLALchemy (no "re-testing the wheel")
+* No tests provided for the datastore class, as it fully relies on
+  SQLALchemy for querying (no "re-testing the wheel")
 * Average tracks per day are rounded to the lowest integer value
