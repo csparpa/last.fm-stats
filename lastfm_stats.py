@@ -33,7 +33,7 @@ if __name__ == '__main__':
     else:
         print 'You never listened to any track so far.'
 
-    top_five = aggr.top_favorite_artists()
+    top_five = aggr.top_five_favorite_artists()
     if top_five:
         print 'Your top 5 favorite artists: %s.' % (", ".join(top_five),)
     else:

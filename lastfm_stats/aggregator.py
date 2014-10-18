@@ -3,8 +3,6 @@ from datetime import datetime
 
 class Aggregator():
 
-
-
     def __init__(self, datastore):
         self.datastore = datastore
         self.weekdays_names = {
@@ -20,8 +18,8 @@ class Aggregator():
     def count_unique_tracks(self):
         return self.datastore.count_unique_tracks()
 
-    def top_favorite_artists(self):
-        occurrences = self.datastore.artist_occurrences()
+    def top_five_favorite_artists(self):
+        occurrences = self.datastore.ordered_artist_occurrences()
         return [t[0] for t in occurrences[:5]]
 
     def daily_average_tracks(self):

@@ -19,7 +19,7 @@ class TestHttpClient(unittest.TestCase):
 
     def test_get_recent_tracks_for_invokes_issues_one_http_get(self):
         requests.get = MagicMock()
-        result = self.instance.get_recent_tracks_for(self.username, self.before)
+        self.instance.get_recent_tracks_for(self.username, self.before)
         self.assertEquals(1, len(requests.get.call_args_list))
 
     def test_get_recent_tracks_for_returns_none_when_connectivity_drops(self):

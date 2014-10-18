@@ -54,7 +54,7 @@ class Datastore():
         self.session.close()
         return query.all()
 
-    def artist_occurrences(self):
+    def ordered_artist_occurrences(self):
         query = self.session.query(Track.artist_id,
                     func.count(Track.artist_id).label("cnt")).\
                     group_by(Track.artist_id).\
