@@ -26,7 +26,7 @@ class Datastore():
         self.session = sessionmaker(bind=self.engine)()
         Base.metadata.create_all(self.engine)
 
-    def save(self, list_of_tracks):
+    def save_track_list(self, list_of_tracks):
         try:
             for track in list_of_tracks:
                 self.session.merge(track)

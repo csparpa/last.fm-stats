@@ -15,7 +15,7 @@ if __name__ == '__main__':
     def save_track_history_for(username, before=None):
         json_blob = client.get_recent_tracks_for(username, before)
         if json_blob is not None:
-            ds.save(TrackParser.parse(json_blob))
+            ds.save_track_list(TrackParser.parse(json_blob))
 
     # Retrieve recently listened to data from API
     save_track_history_for(username)
@@ -30,8 +30,11 @@ if __name__ == '__main__':
     print 'You have listened to a total of %d tracks.' % \
           (aggr.count_unique_tracks(),)
 
-    print 'Your top 5 favorite artists: %s.' % \
-          (", ".join(aggr.top_favorite_artists()),)
+    top_five = aggr.top_favorite_artists()
+    if top_five:
+        print 'Your top 5 favorite artists: %s.' % (", ".join(top_five),)
+    else:
+        print 'You haven\'t got favorite artists yet.'
 
     avg = aggr.daily_average_tracks()
     if avg is not None:
