@@ -17,18 +17,21 @@ if __name__ == '__main__':
         if json_blob is not None:
             ds.save_track_list(TrackParser.parse(json_blob))
 
-    # Retrieve recently listened to data from API
+    # Retrieve recently listened to tracks data from API
     save_track_history_for(username)
 
-    # Identify oldest saved track for user then retrieve historical listenings
+    # Identify oldest saved track for user, then retrieve historical listens
     # This is done exactly 4 times
     for _ in range(4):
         uts = ds.oldest_listening_uts()
         save_track_history_for(username, uts)
 
     # Get stats
-    print 'You have listened to a total of %d tracks.' % \
-          (aggr.count_unique_tracks(),)
+    total = aggr.count_unique_tracks()
+    if total != 0:
+        print 'You have listened to a total of %d tracks.' % (total,)
+    else:
+        print 'You never listened to any track so far.'
 
     top_five = aggr.top_favorite_artists()
     if top_five:
@@ -36,10 +39,10 @@ if __name__ == '__main__':
     else:
         print 'You haven\'t got favorite artists yet.'
 
-    avg = aggr.daily_average_tracks()
-    if avg is not None:
-        print 'You listen to an average of %d tracks a day.' % (avg,)
-    else:
-        print 'You never listened to any track.'
+    print 'You listen to an average of %d tracks a day.' % (aggr.daily_average_tracks(),)
 
-    print 'Your most active day is %s.' % (aggr.most_active_weekday(),)
+    day = aggr.most_active_weekday()
+    if day is not None:
+        print 'Your most active day is %s.' % (day,)
+    else:
+        print 'You haven\'t had a most active day yet.'

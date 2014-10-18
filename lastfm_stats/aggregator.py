@@ -33,7 +33,7 @@ class Aggregator():
         if n_utss != 0:
             return math.floor(n_tracks/n_utss)
         else:
-            return None
+            return 0
 
     def most_active_weekday(self):
         utss = self.datastore.get_all_listening_uts()
@@ -43,5 +43,8 @@ class Aggregator():
             weekday_number = datetime.fromtimestamp(uts[0]).weekday()
             weekday_name = self.weekdays_names[weekday_number]
             listens_per_weekday[weekday_name] += 1
-        return max(listens_per_weekday.iterkeys(),
-                   key=(lambda key: listens_per_weekday[key]))
+        if any(listens_per_weekday.values()):
+            return max(listens_per_weekday.iterkeys(),
+                       key=(lambda key: listens_per_weekday[key]))
+        else:
+            return None
