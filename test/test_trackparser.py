@@ -2,7 +2,7 @@ import unittest
 from lastfm_stats import trackparser
 from lastfm_stats import datastore
 
-class TestHttpClient(unittest.TestCase):
+class TestTrackParser(unittest.TestCase):
 
     api_key = "test-api-key"
     username = "test"
