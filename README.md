@@ -48,3 +48,4 @@ What you need to know
     - SQLite database
 * No tests provided for the Data Access provider class, as it relies on
   SQLALchemy (no "re-testing the wheel")
+* Average tracks per day are rounded to the lowest integer value
