@@ -2,7 +2,6 @@ from sqlalchemy import Column, ForeignKey, String, Integer, BigInteger, desc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.sql import func
-from datetime import datetime
 
 Base = declarative_base()
 
@@ -21,7 +20,6 @@ class Track(Base):
 class Datastore():
 
     def __init__(self, engine):
-        # Init ORM
         self.engine = engine
         self.session = sessionmaker(bind=self.engine)()
         Base.metadata.create_all(self.engine)

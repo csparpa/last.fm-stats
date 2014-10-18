@@ -1,10 +1,13 @@
 last.fm-stats
 =============
 
-Exercise on Last.fm data aggregation 
+Exercise on Last.fm data aggregation
 
+Works on
+--------
+Python 2.7
 
-Usage example
+How to use it
 -------------
 
 1. Install dependencies:
@@ -17,7 +20,13 @@ $ pip install -r requirements.txt
 $ python lastfm_stats <username>
 
 You have listened to a total of 254 tracks. 
-Your top 5 favorite artists: 65daysofstatic, Beck, Fowler, Martin, Bloch.
+Your top 5 favorite artists: U2, Led Zeppelin, Rolling Stones, Bob Marley, Kasabian.
 You listen to an average of 32 tracks a day.
 Your most active day is Tuesday.
+```
+
+How to run the test suites
+--------------------------
+```bash
+$ python setup.py test
 ```
