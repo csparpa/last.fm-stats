@@ -1,9 +1,5 @@
 import requests
 
-"""
-Module containing an HTTP client for the Last.fm web API
-"""
-
 class HttpClient():
 
     root_url = "http://ws.audioscrobbler.com/2.0"
@@ -24,10 +20,11 @@ class HttpClient():
 
         :param username: the username
         :type username: str
-        :param before: if not None, only tracks listened to before this UTC Unix
-            timtestamp are retrieved
+        :param before: if this value is not None, only tracks listened to before
+            this UTC Unix timtestamp are retrieved. If it is None, then tracks
+            dating back from the current time are retrieved.
         :type before: int
-        :returns: a JSON Unicode string
+        :returns: a dict representing the JSON payload of the HTTP response
         """
         query_params = self.build_query_params(username, before)
         try:
@@ -38,5 +35,22 @@ class HttpClient():
         return resp.json()
 
     def build_query_params(self, username, before):
-        return dict(method=self.method, user=username,
-                            api_key=self.api_key, format="json", to=before)
+        """
+        Builds a dict of query parameters for requesting recent tracks.
+        The function adds more key-value couples to the ones passed as parameters:
+        it specifies the object method used to query the API, the return format
+        and the API key.
+
+        :param username: the username
+        :type username: str
+        :param before: if this value is not None, it is mapped into the query
+            parameters otherwise it is left out.
+        :type before: int
+        :returns: a dict representing the HTTP request query parameters
+        """
+        params = dict(method=self.method, user=username, api_key=self.api_key,
+                      format="json")
+        if before is not None:
+            return dict(params, to=before)
+        else:
+            return params
