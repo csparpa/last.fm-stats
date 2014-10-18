@@ -29,7 +29,14 @@ class HttpClient():
         :type before: int
         :returns: a JSON Unicode string
         """
-        query_params = dict(method=self.method, user=username,
-                            api_key=self.api_key, format="json", to=before)
-        resp = requests.get(self.root_url, params=query_params)
+        query_params = self.build_query_params(username, before)
+        try:
+            resp = requests.get(self.root_url, params=query_params)
+        except requests.ConnectionError:
+            print "Impossible to retrieve Last.fm web API: skipping request"
+            return None
         return resp.json()
+
+    def build_query_params(self, username, before):
+        return dict(method=self.method, user=username,
+                            api_key=self.api_key, format="json", to=before)
