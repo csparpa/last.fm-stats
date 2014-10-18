@@ -1,12 +1,10 @@
 import unittest
 from lastfm_stats import aggregator
-from lastfm_stats import datastore
 from mock import MagicMock
-from sqlalchemy import create_engine
 
 class TestAggregator(unittest.TestCase):
 
-    ds = datastore.Datastore(create_engine('sqlite:///test.db'))
+    ds = MagicMock()
     instance = aggregator.Aggregator(ds)
 
     def test_count_unique_tracks(self):
