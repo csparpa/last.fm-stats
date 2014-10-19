@@ -23,7 +23,7 @@ $ sudo pip install -r requirements.txt
 ```
 (omit `sudo` if on Windows)
 
-3. Launch replacing `<username>` with the username you want stats for:
+3. Launch the script replacing `<username>` with the username you want stats for:
 ```bash
 $ python lastfm_stats.py <username>
 
@@ -46,6 +46,4 @@ What you need to know
   external components:
     - Last.fm web API
     - SQLite database
-* No tests provided for the datastore class, as it fully relies on
-  SQLALchemy for querying (no "re-testing the wheel")
 * Average tracks per day are rounded to the lowest integer value
