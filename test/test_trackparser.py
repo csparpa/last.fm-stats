@@ -2,6 +2,7 @@ import unittest
 from lastfm_stats import trackparser
 from lastfm_stats import datastore
 
+
 class TestTrackParser(unittest.TestCase):
     artist1 = datastore.Artist(id="Led Zeppelin")
     artist2 = datastore.Artist(id="Johann Sebastian Bach")

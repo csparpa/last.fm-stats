@@ -5,12 +5,14 @@ from sqlalchemy.sql import func
 
 Base = declarative_base()
 
+
 class Artist(Base):
     """
     SQLALchemy entity class representing an Artist
     """
     __tablename__ = 'Artist'
     id = Column(String(56), primary_key=True)
+
 
 class Track(Base):
     """
@@ -22,6 +24,7 @@ class Track(Base):
     listening_uts = Column(BigInteger, nullable=False)
     artist_id = Column(String, ForeignKey('Artist.id'), nullable=False)
     artist = relationship(Artist)
+
 
 class Datastore():
 

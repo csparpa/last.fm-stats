@@ -1,5 +1,6 @@
 import requests
 
+
 class HttpClient():
 
     root_url = "http://ws.audioscrobbler.com/2.0"

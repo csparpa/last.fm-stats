@@ -2,6 +2,7 @@ import unittest
 from lastfm_stats import aggregator
 from mock import MagicMock
 
+
 class TestAggregator(unittest.TestCase):
 
     ds = MagicMock()

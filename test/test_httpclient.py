@@ -3,6 +3,7 @@ import requests
 from mock import MagicMock
 from lastfm_stats import httpclient
 
+
 class TestHttpClient(unittest.TestCase):
 
     api_key = "test-api-key"
