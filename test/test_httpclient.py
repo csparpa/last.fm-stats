@@ -11,16 +11,6 @@ class TestHttpClient(unittest.TestCase):
     before = "1234567"
     instance = httpclient.HttpClient(api_key)
 
-
-    def test_build_query_parameters_returns_dict_with_query_params(self):
-        expected = dict(user=self.username, api_key=self.api_key, format="json",
-                        method="user.getrecenttracks")
-        result = self.instance.build_query_params(self.username, None)
-        self.assertDictEqual(expected, result)
-        expected = dict(expected, to=self.before)
-        result = self.instance.build_query_params(self.username, self.before)
-        self.assertDictEqual(expected, result)
-
     def test_get_recent_tracks_for_invokes_issues_one_http_get(self):
         requests.get = MagicMock()
         self.instance.get_recent_tracks_for(self.username, self.before)

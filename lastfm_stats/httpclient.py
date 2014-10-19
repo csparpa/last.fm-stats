@@ -27,31 +27,13 @@ class HttpClient():
         :type before: int
         :returns: a dict representing the JSON payload of the HTTP response
         """
-        query_params = self.build_query_params(username, before)
+        query_params = dict(method=self.method, user=username,
+                            api_key=self.api_key, format="json")
+        if before is not None:
+            query_params.update(dict(to=before))
         try:
             resp = requests.get(self.root_url, params=query_params)
         except requests.ConnectionError:
             print "Impossible to retrieve Last.fm web API: skipping request"
             return None
         return resp.json()
-
-    def build_query_params(self, username, before):
-        """
-        Builds a dict of query parameters for requesting recent tracks.
-        The function adds more key-value couples to the ones passed as parameters:
-        it specifies the object method used to query the API, the return format
-        and the API key.
-
-        :param username: the username
-        :type username: str
-        :param before: if this value is not None, it is mapped into the query
-            parameters otherwise it is left out.
-        :type before: int
-        :returns: a dict representing the HTTP request query parameters
-        """
-        params = dict(method=self.method, user=username, api_key=self.api_key,
-                      format="json")
-        if before is not None:
-            return dict(params, to=before)
-        else:
-            return params
