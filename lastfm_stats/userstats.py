@@ -9,31 +9,20 @@ class UserStats():
         self.client = HttpClient(api_key)
         self.ds = Datastore(create_engine('sqlite:///%s.db' % (username,)))
 
-    def analyse(self):
-        # Call API
-        self.get_task_history()
-
-        # Aggregate data from datastore
-        aggregator = Aggregator(self.ds)
-        self.unique_tracks(aggregator)
-        self.top_five_favorite_artists(aggregator)
-        self.daily_average_tracks(aggregator)
-        self.most_active_weekday(aggregator)
-
-    def save_tracks_history(self, before=None):
+    def acquire_track_history(self, before=None):
         json_blob = self.client.get_recent_tracks_for(self.username, before)
         if json_blob is not None:
             self.ds.save_track_list(TrackParser.parse(json_blob))
 
-    def get_task_history(self, max_api_calls=5):
+    def update_user_task_history(self, max_api_calls=5):
         # Retrieve recently listened to tracks data from API
-        self.save_tracks_history()
-
-        # Identify oldest saved track for user, then retrieve historical listens
-        # This is done exactly 4 times
+        self.acquire_track_history()
         for _ in range(max_api_calls-1):
+            # Identify oldest saved track for user
             uts = self.ds.oldest_listening_uts()
-            self.save_tracks_history(uts)
+            if uts is None: # API has no data for this user: stop calling it
+                break
+            self.acquire_track_history(uts) # Backfill history of tracks
 
     def unique_tracks(self, aggregator):
         unique_tracks = aggregator.count_unique_tracks()
@@ -59,3 +48,14 @@ class UserStats():
             print 'Your most active day is %s.' % (day,)
         else:
             print 'You haven\'t had a most active day yet.'
+
+    def analyse(self):
+        # Acquire user raw data and save it
+        self.update_user_task_history()
+
+        # Aggregate data from datastore
+        aggregator = Aggregator(self.ds)
+        self.unique_tracks(aggregator)
+        self.top_five_favorite_artists(aggregator)
+        self.daily_average_tracks(aggregator)
+        self.most_active_weekday(aggregator)
