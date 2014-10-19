@@ -3,11 +3,6 @@ from lastfm_stats import trackparser
 from lastfm_stats import datastore
 
 class TestTrackParser(unittest.TestCase):
-
-    api_key = "test-api-key"
-    username = "test"
-    before = "1234567"
-
     artist1 = datastore.Artist(id="Led Zeppelin")
     artist2 = datastore.Artist(id="Johann Sebastian Bach")
     track1 = datastore.Track(name="Misty mountain hop",
@@ -41,7 +36,7 @@ class TestTrackParser(unittest.TestCase):
 
     response_blob = {
         "recenttracks": {
-            "track": [ track1_blob, track2_blob ]
+            "track": [track1_blob, track2_blob]
         }
     }
 
@@ -56,19 +51,19 @@ class TestTrackParser(unittest.TestCase):
 
     def test_build_track_from_builds_a_track(self):
         expected = self.track1
-        result = trackparser.TrackParser.build_track_from(self.track1_blob)
+        result = trackparser.build_track_from(self.track1_blob)
         self.assertTracksEqual(expected, result)
 
     def test_build_track_from_with_malformed_blob(self):
-        result = trackparser.TrackParser.build_track_from(self.malformed_response_blob)
+        result = trackparser.build_track_from(self.malformed_response_blob)
         self.assertIsNone(result)
 
     def test_parse_returns_list_of_tracks(self):
-        result_list = trackparser.TrackParser.parse(self.response_blob)
+        result_list = trackparser.parse(self.response_blob)
         self.assertEqual(2, len(result_list))
         self.assertTracksEqual(self.track1, result_list[0])
         self.assertTracksEqual(self.track2, result_list[1])
 
     def test_parse_with_malformed_blob(self):
-        result = trackparser.TrackParser.parse(self.malformed_response_blob)
+        result = trackparser.parse(self.malformed_response_blob)
         self.assertEqual(0, len(result))

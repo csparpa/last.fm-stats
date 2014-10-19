@@ -1,5 +1,5 @@
 
-from lastfm_stats import HttpClient, TrackParser, Datastore, Aggregator
+from lastfm_stats import HttpClient, Datastore, Aggregator, trackparser
 from sqlalchemy import create_engine
 
 class UserStats():
@@ -12,7 +12,7 @@ class UserStats():
     def acquire_track_history(self, before=None):
         json_blob = self.client.get_recent_tracks_for(self.username, before)
         if json_blob is not None:
-            self.ds.save_track_list(TrackParser.parse(json_blob))
+            self.ds.save_track_list(trackparser.parse(json_blob))
 
     def update_user_task_history(self, max_api_calls=5):
         # Retrieve recently listened to tracks data from API
