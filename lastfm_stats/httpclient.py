@@ -4,7 +4,7 @@ import requests
 class HttpClient():
 
     root_url = "http://ws.audioscrobbler.com/2.0"
-    method = "user.getrecenttracks"
+    recent_tracks_method = "user.getrecenttracks"
 
     def __init__(self, api_key):
         """
@@ -17,7 +17,8 @@ class HttpClient():
 
     def get_recent_tracks_for(self, username, before=None):
         """
-        Retrieves the listened-to track history for a specific user
+        Retrieves the listened-to track history for a specific user from the
+        Last.fm web API
 
         :param username: the username
         :type username: str
@@ -27,7 +28,7 @@ class HttpClient():
         :type before: int
         :returns: a dict representing the JSON payload of the HTTP response
         """
-        query_params = dict(method=self.method, user=username,
+        query_params = dict(method=self.recent_tracks_method, user=username,
                             api_key=self.api_key, format="json")
         if before is not None:
             query_params.update(dict(to=before))
