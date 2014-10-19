@@ -60,11 +60,11 @@ class TestTrackParser(unittest.TestCase):
         self.assertIsNone(result)
 
     def test_parse_returns_list_of_tracks(self):
-        result_list = trackparser.parse(self.response_blob)
+        result_list = trackparser.parse_track_collection(self.response_blob)
         self.assertEqual(2, len(result_list))
         self.assertTracksEqual(self.track1, result_list[0])
         self.assertTracksEqual(self.track2, result_list[1])
 
     def test_parse_with_malformed_blob(self):
-        result = trackparser.parse(self.malformed_response_blob)
+        result = trackparser.parse_track_collection(self.malformed_response_blob)
         self.assertEqual(0, len(result))

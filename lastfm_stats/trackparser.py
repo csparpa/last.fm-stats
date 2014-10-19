@@ -20,11 +20,11 @@ def build_track_from(track_dict):
                       artist=artist)
         return track
     except KeyError:
-        print "Warning: impossible to parse data for this track, skipping"
+        print "Warning: impossible to parse data for this track, skipping."
         return None
 
 
-def parse(track_collection_dict):
+def parse_track_collection(track_collection_dict):
     """
     Given a dict structured according the Last.fm API JSON representation for
     recently listened-to tracks collection, tries to parse a list of Track
@@ -44,6 +44,6 @@ def parse(track_collection_dict):
             if track is not None:
                 result.append(track)
     except KeyError:
-        print "Warning: impossible to parse user track data, skipping data batch"
+        print "Warning: impossible to parse user track data, skipping data batch."
     finally:
         return result

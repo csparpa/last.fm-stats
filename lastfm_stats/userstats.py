@@ -12,12 +12,12 @@ class UserStats():
         self.aggregator = Aggregator(self.ds)
 
     def acquire_track_history(self, before=None):
-        json_blob = self.client.get_recent_tracks_for(self.username, before)
-        if json_blob is not None:
-            self.ds.save_track_list(trackparser.parse(json_blob))
+        data = self.client.get_recent_tracks_for(self.username, before)
+        if data is not None:
+            self.ds.save_track_list(trackparser.parse_track_collection(data))
 
     def update_user_task_history(self, max_api_calls=5):
-        # Retrieve recently listened to tracks data from API
+        # Retrieve recently listened-to tracks data from API
         self.acquire_track_history()
         for _ in range(max_api_calls-1):
             # Identify oldest saved track for user
@@ -52,6 +52,7 @@ class UserStats():
             print 'You haven\'t had a most active day yet.'
 
     def analyse(self):
+
         # Acquire user raw data and save it
         self.update_user_task_history()
 
