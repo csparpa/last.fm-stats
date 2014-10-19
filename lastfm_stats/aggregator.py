@@ -24,14 +24,13 @@ class Aggregator():
 
     def daily_average_tracks(self):
         utss = self.datastore.get_all_listening_uts()
+        if len(utss) == 0:
+            return 0
         dates = [datetime.fromtimestamp(uts[0]).date() for uts in utss]
         unique_dates = set(dates)
         n_utss = len(unique_dates)
         n_tracks = self.datastore.count_tracks()
-        if n_utss != 0:
-            return math.floor(n_tracks/n_utss)
-        else:
-            return 0
+        return math.floor(n_tracks/n_utss)
 
     def most_active_weekday(self):
         utss = self.datastore.get_all_listening_uts()
